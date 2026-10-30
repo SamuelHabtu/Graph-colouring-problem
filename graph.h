@@ -3,13 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-typedef struct Node{
+//had to do this so I can set up the neighbours member within Node!
+typedef struct Node Node;
+struct Node{
     size_t id;
-    size_t* neighbours;
-}Node;
+    size_t n_neighbours;
+    Node** neighbours;
+};
 
-typedef struct Graph{
+typedef struct{
     size_t V;
     Node** nodes;
 }Graph;
@@ -17,7 +19,8 @@ typedef struct Graph{
 Node* createNode(size_t id);
 Graph* createGraph(size_t V);
 void addNode(Graph* graph, size_t id);
-void addEdge(Graph* graph, size_t u, size_t v);
+void addEdge(Graph* graph, Node* u, Node* v);
 void printGraph(Graph* graph);
 void freeGraph(Graph* graph);
+
 #endif
