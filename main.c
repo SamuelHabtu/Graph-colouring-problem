@@ -3,8 +3,7 @@
 #include "graph.h"
 
 
-
-int main()
+void quickTest()
 {
     size_t V = 5;
     Graph* graph = createGraph(V);
@@ -20,5 +19,11 @@ int main()
     addEdge(graph, graph->nodes[3], graph->nodes[4]);
     printGraph(graph);
     freeGraph(graph);
+    return;
+}
+
+int main()
+{
+    quickTest();
     return 0;
 }
