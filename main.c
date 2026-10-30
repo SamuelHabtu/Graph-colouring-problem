@@ -18,9 +18,11 @@ void quickTest()
     addEdge(graph, graph->nodes[2], graph->nodes[3]);
     addEdge(graph, graph->nodes[3], graph->nodes[4]);
     printGraph(graph);
+    printf("Graph has max Clique of size %ld\n", getMaxClique(graph));
     freeGraph(graph);
     return;
 }
+
 
 int main()
 {

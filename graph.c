@@ -52,6 +52,17 @@ void printGraph(Graph* graph)
     }
 }
 
+size_t getMaxClique(const Graph* graph)
+{
+    //since we know n_neighbours can be anywhere from 0 to V - 1 we can do this:
+    size_t frequencies[graph->V] = {0};
+    for(size_t i = 0; i < graph->V;i++)
+    {
+        
+    }
+    return 0;
+}
+
 void freeGraph(Graph* graph){
 
     for(size_t i = 0;i < graph->V; i++){
