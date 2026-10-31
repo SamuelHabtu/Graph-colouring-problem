@@ -33,10 +33,20 @@ void addNode(Graph* graph, size_t id)
 }
 void addEdge(Graph* graph, Node* u, Node* v)
 {
+    //check if were already neighbours B)
+    if (graph->nodes[u->id]->neighbours[v->id] != NULL){
+        return;
+    }
     graph->nodes[u->id]->neighbours[v->id] = v;
     graph->nodes[v->id]->neighbours[u->id] = u;
     graph->nodes[u->id]->n_neighbours += 1;
     graph->nodes[v->id]->n_neighbours += 1;
+}
+void addEdges(Graph* graph, size_t target, size_t n_edges, const size_t edges[])
+{
+    for(size_t i = 0; i < n_edges; i++){
+        addEdge(graph, graph->nodes[target], graph->nodes[edges[i]]);
+    }
 }
 void printGraph(Graph* graph)
 {
@@ -52,19 +62,43 @@ void printGraph(Graph* graph)
     }
 }
 
+void updateCandidates(const Graph *graph, size_t n_edges)
+{
+    size_t counter = 0;
+    for(size_t i = 0; i < graph->V; i++)
+    {
+        if(graph->nodes && graph->nodes[i]->n_neighbours >= n_edges){
+            counter += 1;
+            candidates[i] = graph->nodes[i];
+        }
+    }
+}
+
 size_t getMaxClique(const Graph* graph)
 {
     //since we know n_neighbours can be anywhere from 0 to V - 1 we can make an array of the counts of n_neighbours
     //since l < n_neighbours < u where l = 0 and u = V - 1 
     size_t* frequencies;
     frequencies = calloc(graph->V, sizeof(size_t));
-
-    for(size_t i = 0; i < graph->V;i++)
-    {
+    size_t candidates[] = calloc(graph->V * sizeof(size_t));
+    for(size_t i = 0; i < graph->V;i++){
         frequencies[graph->nodes[i]->n_neighbours] += 1;
-        printf("Node: {%ld} : Freq: {%ld}\n",  i, graph->nodes[i]->n_neighbours);
+        printf("Node: {%ld} : n_neighbours: {%ld}\n",  i, graph->nodes[i]->n_neighbours);
+    }
+    //we iterate through the frequencies
+    for(size_t i = 0;i < graph->V; i++){
+            if(frequencies[i] != 0){
+                printf("n_neighbours: {%ld} : Freq of n_neighbours: {%ld}\n",  i, frequencies[i]);
+            }
+    }
+    //we go through the frequencies backwards
+    for(size_t i = graph->V - 1;i >= 0; i--){
+        
     }
     
+
+    free(candidates);
+    free(frequencies);
     return 0;
 }
 

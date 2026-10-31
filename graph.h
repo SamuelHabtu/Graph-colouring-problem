@@ -20,8 +20,10 @@ Node* createNode(size_t id);
 Graph* createGraph(size_t V);
 void addNode(Graph* graph, size_t id);
 void addEdge(Graph* graph, Node* u, Node* v);
-void printGraph(Graph* graph);
+void addEdges(Graph* graph, size_t target, size_t n_edges, const size_t edges[]);
+void printGraph(const Graph* graph);
 void freeGraph(Graph* graph);
+Node* getCandidates(const Graph *graph, size_t n_edges);
 size_t getMaxClique(const Graph* graph);
 
 #endif
