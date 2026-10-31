@@ -54,12 +54,17 @@ void printGraph(Graph* graph)
 
 size_t getMaxClique(const Graph* graph)
 {
-    //since we know n_neighbours can be anywhere from 0 to V - 1 we can do this:
-    size_t frequencies[graph->V] = {0};
+    //since we know n_neighbours can be anywhere from 0 to V - 1 we can make an array of the counts of n_neighbours
+    //since l < n_neighbours < u where l = 0 and u = V - 1 
+    size_t* frequencies;
+    frequencies = calloc(graph->V, sizeof(size_t));
+
     for(size_t i = 0; i < graph->V;i++)
     {
-        
+        frequencies[graph->nodes[i]->n_neighbours] += 1;
+        printf("Node: {%ld} : Freq: {%ld}\n",  i, graph->nodes[i]->n_neighbours);
     }
+    
     return 0;
 }
 

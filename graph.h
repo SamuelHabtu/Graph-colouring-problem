@@ -22,6 +22,6 @@ void addNode(Graph* graph, size_t id);
 void addEdge(Graph* graph, Node* u, Node* v);
 void printGraph(Graph* graph);
 void freeGraph(Graph* graph);
-size_t getMaxClique(Graph* graph);
+size_t getMaxClique(const Graph* graph);
 
 #endif
