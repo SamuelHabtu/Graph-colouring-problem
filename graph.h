@@ -2,6 +2,7 @@
 #define GRAPH_H
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 //had to do this so I can set up the neighbours member within Node
 typedef struct Node Node;
@@ -13,8 +14,11 @@ struct Node{
 
 typedef struct{
     size_t V;
+    size_t E;
     Node** nodes;
 }Graph;
+
+
 
 Node* createNode(size_t id);
 Graph* createGraph(size_t V);
@@ -25,5 +29,7 @@ void printGraph(const Graph* graph);
 void freeGraph(Graph* graph);
 Node* getCandidates(const Graph *graph, size_t n_edges);
 size_t getMaxClique(const Graph* graph);
-
+void updateCandidates(const Graph *graph, size_t target, Node** candidates); 
+bool isNeighbour(Node* u, Node* v);
+bool checkCliqueSize(const Graph* graph, size_t target, const Node** candidates)
 #endif
