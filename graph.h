@@ -31,5 +31,5 @@ Node* getCandidates(const Graph *graph, size_t n_edges);
 size_t getMaxClique(const Graph* graph);
 void updateCandidates(const Graph *graph, size_t target, Node** candidates); 
 bool isNeighbour(Node* u, Node* v);
-bool checkCliqueSize(const Graph* graph, size_t target, const Node** candidates)
+bool checkCliqueSize(const Graph* graph, size_t target, const Node** candidates);
 #endif

@@ -72,24 +72,10 @@ bool isNeighbour(Node* u, Node* v){
     return false;
 }
 
-bool checkCliqueSize(const Graph* graph, size_t target, const Node** candidates)
+size_t checkCliqueSize(const Graph* graph, size_t target, const Node** candidates)
 {
-    size_t counter = 0;
-    for(size_t i = 0; i < graph->V;i++){
-        counter = 0;
-        for(size_t j = 0; j < graph->V;j++){
-            if(graph->nodes[i]->neighbours[j] != NULL){
-                counter += 1;
-                
-            }
-            for(size_t k = 0; k < graph->V; k++){
-                if(graph->nodes[i]->neighbours[j] != NULL){
-                    counter += 1;
-                }
-            }
-        }
-    }
-    return counter == target;
+    //TRIPLE POINTER? O_O
+    
 }
 
 void updateCandidates(const Graph *graph, size_t target, Node** candidates)
@@ -99,7 +85,6 @@ void updateCandidates(const Graph *graph, size_t target, Node** candidates)
     for(size_t i = 0; i < graph->V; i++)
     {
         if(candidates[i] == NULL && graph->nodes[i]->n_neighbours >= target - 1){
-
             candidates[i] = graph->nodes[i];
         }
     }
@@ -125,8 +110,12 @@ size_t getMaxClique(const Graph* graph)
     }
     //we go through the frequencies backwards // loop coniditon is just i-- 
     for(size_t i = (graph->V);i--;){
+        //add all nodes that have enough connections to be apart of a clique of size i
         updateCandidates(graph, i, candidates);
-        
+        if(checkCliqueSize(graph, i, candidates) >= i)
+        {
+            return i;
+        }
     }
 
     
