@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <stdbool.h>
+#include <math.h>
 #include "graph.h"
 
 
@@ -72,13 +74,44 @@ bool isNeighbour(Node* u, Node* v){
     return false;
 }
 
-size_t checkCliqueSize(const Graph* graph, size_t target, const Node** candidates)
+bool isClique(const Graph* graph, size_t target,  Node** candidates)
 {
-    //TRIPLE POINTER? O_O
-    
+    size_t count = 0;
+
+    printf("HERE?");
+    for(size_t i = 0; i < graph->V; i++)
+    {
+        for(size_t j = 0; j < graph->V; j++){
+            if(candidates[i] != NULL && candidates[j] != NULL){
+                if(candidates[i]->neighbours[j]->id != candidates[j]->id){
+                    return false;
+                }
+
+            }
+        }
+    }
+   return true;
 }
 
-void updateCandidates(const Graph *graph, size_t target, Node** candidates)
+size_t checkCliqueSize(const Graph* graph, size_t target,  Node** candidates)
+{
+    size_t count = 0;
+    Node ** test;
+    test = calloc(4, sizeof(Node));
+    test[0] = candidates[0];
+    test[1] = candidates[1];
+    test[2] = candidates[2];
+    test[5] = candidates[5];
+    if(isClique(graph, 4,  test))
+    {
+        printf("Clique of size: %zu", 4);
+    }
+    free(test);
+    
+   return 0;
+}
+
+void updateCandidates(const Graph *graph, size_t target, Node** candidates, size_t* n_candidates)
 {
 
     //check each node for a node to be apart of a clique of size n, it must have ATLEAST n - 1 edges
@@ -86,42 +119,38 @@ void updateCandidates(const Graph *graph, size_t target, Node** candidates)
     {
         if(candidates[i] == NULL && graph->nodes[i]->n_neighbours >= target - 1){
             candidates[i] = graph->nodes[i];
+            *n_candidates += 1;
         }
     }
 }
 
+bool findClique(const Graph* graph, Node ** candidates, size_t target, size_t n_candidates)
+{
+
+    return false;
+}
 size_t getMaxClique(const Graph* graph)
 {
-    //since we know n_neighbours can be anywhere from 0 to V - 1 we can make an array of the counts of n_neighbours
-    //since l < n_neighbours < u where l = 0 and u = V - 1 
-    size_t* frequencies;
-    frequencies = calloc(graph->V, sizeof(size_t));
-    Node** candidates;
-    candidates = calloc(graph->V, sizeof(Node));
-    for(size_t i = 0; i < graph->V;i++){
+    Node** candidates = calloc(graph->V, sizeof(Node));
+    size_t* frequencies = calloc(graph->V, sizeof(size_t));
+    size_t n_candidates = 0;
+
+    for(size_t i = 0; i < graph->V; i++){
         frequencies[graph->nodes[i]->n_neighbours] += 1;
-        printf("Node: {%ld} : n_neighbours: {%ld}\n",  i, graph->nodes[i]->n_neighbours);
     }
-    //we iterate through the frequencies
-    for(size_t i = 0;i < graph->V; i++){
-            if(frequencies[i] != 0){
-                printf("n_neighbours: {%ld} : Freq of n_neighbours: {%ld}\n",  i, frequencies[i]);
-            }
+    for(size_t i = 0; i < graph->V;i++){
+        printf(" %lu \n", frequencies[i]);
     }
-    //we go through the frequencies backwards // loop coniditon is just i-- 
-    for(size_t i = (graph->V);i--;){
-        //add all nodes that have enough connections to be apart of a clique of size i
-        updateCandidates(graph, i, candidates);
-        if(checkCliqueSize(graph, i, candidates) >= i)
-        {
-            return i;
+    for(size_t i = graph->V;i > 2;i--){
+        updateCandidates(graph, i, candidates, &n_candidates);
+        if(n_candidates >= i){
+            if(findClique(graph ,candidates, i, n_candidates))
+                return i;
         }
     }
 
-    
-
-    free(candidates);
     free(frequencies);
+    free(candidates);
     return 0;
 }
 
