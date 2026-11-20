@@ -74,41 +74,31 @@ bool isNeighbour(Node* u, Node* v){
     return false;
 }
 
-bool isClique(const Graph* graph, size_t target,  Node** candidates)
+
+
+Node ** createClique(Node* set_a, Node* set_b, size_t* clique_size, size_t target)
 {
-    size_t count = 0;
-
-    printf("HERE?");
-    for(size_t i = 0; i < graph->V; i++)
-    {
-        for(size_t j = 0; j < graph->V; j++){
-            if(candidates[i] != NULL && candidates[j] != NULL){
-                if(candidates[i]->neighbours[j]->id != candidates[j]->id){
-                    return false;
-                }
-
+    if(target == 3){
+        Node* all_cliques[]
+        for(size_t i = 0;i < set_a->n_neighbours;i++){
+            if(set_a->neighbours[i] && set_b->neighbours[i]){
+                
             }
         }
     }
-   return true;
-}
 
-size_t checkCliqueSize(const Graph* graph, size_t target,  Node** candidates)
+}
+size_t checkCliqueSize(const Graph* graph, size_t target,  Node** candidates, size_t n_candidates)
 {
-    size_t count = 0;
-    Node ** test;
-    test = calloc(4, sizeof(Node));
-    test[0] = candidates[0];
-    test[1] = candidates[1];
-    test[2] = candidates[2];
-    test[5] = candidates[5];
-    if(isClique(graph, 4,  test))
+    if(graph->V <= 1)
     {
-        printf("Clique of size: %zu", 4);
+        return graph->V;
     }
-    free(test);
-    
-   return 0;
+    //minimum clique size is 2 assume theres atleast one edge
+    size_t clique_size = 2;
+    for(size_t i = 0; i < n_candidates;i++){
+
+    }
 }
 
 void updateCandidates(const Graph *graph, size_t target, Node** candidates, size_t* n_candidates)
@@ -126,7 +116,6 @@ void updateCandidates(const Graph *graph, size_t target, Node** candidates, size
 
 bool findClique(const Graph* graph, Node ** candidates, size_t target, size_t n_candidates)
 {
-
     return false;
 }
 size_t getMaxClique(const Graph* graph)
